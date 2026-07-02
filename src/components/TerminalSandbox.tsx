@@ -49,7 +49,7 @@ const SnakeGame = ({ theme }: SnakeGameProps) => {
   const spawnFood = () => {
     const gridWidth = 20;
     const gridHeight = 15;
-    let newFood;
+    let newFood: { x: number; y: number };
     while (true) {
       newFood = {
         x: Math.floor(Math.random() * gridWidth),

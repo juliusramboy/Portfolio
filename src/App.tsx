@@ -6,7 +6,7 @@ import { TerminalSandbox } from './components/TerminalSandbox';
 import { Education } from './components/Education';
 import { OJT } from './components/OJT';
 import { Stack } from './components/Stack';
-import { Mail, Terminal, Menu, X, SquareTerminal, Sun, Moon } from 'lucide-react';
+import { Terminal, Menu, X, SquareTerminal, Sun, Moon } from 'lucide-react';
 
 function App() {
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -142,12 +142,16 @@ function App() {
 
         {/* Footer Icons at the bottom of the sidebar */}
         <div className="sidebar-footer-icons" style={{ marginBottom: '10px', display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <SquareTerminal 
-            size={18} 
-            className="sidebar-footer-icon" 
-            onClick={() => scrollToSection('sandbox')} 
+          <span 
             title="Terminal Sandbox"
-          />
+            onClick={() => scrollToSection('sandbox')}
+            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <SquareTerminal 
+              size={18} 
+              className="sidebar-footer-icon" 
+            />
+          </span>
           <button
             onClick={() => setIsDarkMode(prev => !prev)}
             style={{
