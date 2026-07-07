@@ -6,7 +6,7 @@ import { TerminalSandbox } from './components/TerminalSandbox';
 import { Education } from './components/Education';
 import { OJT } from './components/OJT';
 import { Stack } from './components/Stack';
-import { Terminal, Menu, X, SquareTerminal, Sun, Moon } from 'lucide-react';
+import { Terminal, Menu, X, SquareTerminal, Sun, Moon, Eye, EyeOff } from 'lucide-react';
 
 function App() {
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -16,6 +16,28 @@ function App() {
     if (saved) return saved === 'dark';
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
+
+  const [showCounter, setShowCounter] = useState<boolean>(false);
+  const [visitCount, setVisitCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    const hasVisited = sessionStorage.getItem('has_visited_portfolio');
+    const endpoint = hasVisited
+      ? 'https://api.counterapi.dev/v1/juliusramboy-portfolio/visits'
+      : 'https://api.counterapi.dev/v1/juliusramboy-portfolio/visits/up';
+
+    fetch(endpoint)
+      .then(res => res.json())
+      .then(data => {
+        if (data && typeof data.count === 'number') {
+          setVisitCount(data.count);
+          if (!hasVisited) {
+            sessionStorage.setItem('has_visited_portfolio', 'true');
+          }
+        }
+      })
+      .catch(err => console.error('Error fetching visitor counter:', err));
+  }, []);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -169,6 +191,52 @@ function App() {
           >
             {isDarkMode ? <Sun size={18} className="sidebar-footer-icon" /> : <Moon size={18} className="sidebar-footer-icon" />}
           </button>
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <button
+              onClick={() => setShowCounter(prev => !prev)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: 'var(--secondary)',
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.2s'
+              }}
+              title="Toggle Visit Counter"
+            >
+              {showCounter ? <Eye size={18} className="sidebar-footer-icon" style={{ color: 'var(--primary)' }} /> : <EyeOff size={18} className="sidebar-footer-icon" />}
+            </button>
+            {showCounter && (
+              <div
+                style={{
+                  position: 'absolute',
+                  left: '35px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  backgroundColor: 'var(--bg-alt)',
+                  border: '1px solid var(--border-color)',
+                  padding: '4px 10px',
+                  borderRadius: '4px',
+                  fontSize: '0.75rem',
+                  fontFamily: 'var(--font-mono)',
+                  color: 'var(--primary)',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  zIndex: 1000,
+                  pointerEvents: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <span style={{ color: 'var(--accent)', fontWeight: 'bold' }}>•</span>
+                <span>VISITS: {visitCount !== null ? visitCount : '...'}</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -176,6 +244,30 @@ function App() {
       <div className="content-wrapper">
         {/* Mobile Header Bar (Sticky) */}
         <header className="mobile-header mobile-only">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <button
+              onClick={() => setShowCounter(prev => !prev)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: 'var(--secondary)',
+                padding: '5px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px'
+              }}
+              title="Toggle Visit Counter"
+            >
+              {showCounter ? <Eye size={18} style={{ color: 'var(--primary)' }} /> : <EyeOff size={18} />}
+              {showCounter && (
+                <span className="mono" style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 500 }}>
+                  VISITS: {visitCount !== null ? visitCount : '...'}
+                </span>
+              )}
+            </button>
+          </div>
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             style={{ 
