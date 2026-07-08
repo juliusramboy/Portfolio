@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, Play, RotateCcw } from 'lucide-react';
+import { LazyCat } from './LazyCat';
 
 interface LogEntry {
   type: 'input' | 'output' | 'error' | 'success';
@@ -679,6 +680,7 @@ Active Tech: React, TypeScript, Spring Boot, Flutter, SQLite`
         }}
       >
         <div className="crt-overlay"></div>
+        <LazyCat />
 
         <div
           ref={viewportRef}

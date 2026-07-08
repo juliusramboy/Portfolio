@@ -7,6 +7,7 @@ import { Education } from './components/Education';
 import { OJT } from './components/OJT';
 import { Stack } from './components/Stack';
 import { Terminal, Menu, X, SquareTerminal, Sun, Moon, Eye, EyeOff } from 'lucide-react';
+import { WalkingCat } from './components/WalkingCat';
 
 function App() {
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -244,30 +245,6 @@ function App() {
       <div className="content-wrapper">
         {/* Mobile Header Bar (Sticky) */}
         <header className="mobile-header mobile-only">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <button
-              onClick={() => setShowCounter(prev => !prev)}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                color: 'var(--secondary)',
-                padding: '5px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px'
-              }}
-              title="Toggle Visit Counter"
-            >
-              {showCounter ? <Eye size={18} style={{ color: 'var(--primary)' }} /> : <EyeOff size={18} />}
-              {showCounter && (
-                <span className="mono" style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 500 }}>
-                  VISITS: {visitCount !== null ? visitCount : '...'}
-                </span>
-              )}
-            </button>
-          </div>
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             style={{ 
@@ -289,9 +266,37 @@ function App() {
         <div className={`mobile-nav-drawer mobile-only ${mobileMenuOpen ? 'open' : ''}`}>
           <button onClick={() => handleMobileNav('work')} className="mobile-nav-link">PROJECTS</button>
           <button onClick={() => handleMobileNav('education')} className="mobile-nav-link">EDUCATION</button>
-           <button onClick={() => handleMobileNav('ojt')} className="mobile-nav-link">EXPERIENCE</button>
+          <button onClick={() => handleMobileNav('ojt')} className="mobile-nav-link">EXPERIENCE</button>
           <button onClick={() => handleMobileNav('achievements')} className="mobile-nav-link">ACHIEVEMENTS</button>
           <button onClick={() => handleMobileNav('sandbox')} className="mobile-nav-link">TERMINAL</button>
+          
+          <div style={{ marginTop: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0px' }}>
+            <WalkingCat />
+            <div style={{ width: '240px', height: '1px', backgroundColor: 'var(--border-color)', margin: '0 auto 12px auto' }}></div>
+            <button
+              onClick={() => setShowCounter(prev => !prev)}
+              style={{
+                background: 'none',
+                cursor: 'pointer',
+                color: 'var(--secondary)',
+                padding: '8px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                borderRadius: '6px',
+                backgroundColor: 'var(--bg-alt)',
+                border: '1px solid var(--border-color)',
+                transition: 'all 0.2s'
+              }}
+              title="Toggle Visit Counter"
+            >
+              {showCounter ? <Eye size={18} style={{ color: 'var(--accent)' }} /> : <EyeOff size={18} />}
+              <span className="mono" style={{ fontSize: '0.85rem', color: 'var(--primary)', fontWeight: 500 }}>
+                {showCounter ? `VISITS: ${visitCount !== null ? visitCount : '...'}` : 'SHOW VISITS'}
+              </span>
+            </button>
+          </div>
         </div>
 
         {/* Top Header Information Panel (Desktop Only) */}
