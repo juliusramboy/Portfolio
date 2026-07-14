@@ -61,7 +61,7 @@ function App() {
       const headerOffset = 60;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      
+
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
@@ -78,7 +78,7 @@ function App() {
   // ScrollSpy: observe sections and update active sidebar tab
   useEffect(() => {
     const sectionIds = ['home', 'work', 'education', 'ojt', 'achievements', 'sandbox'];
-    
+
     const observerOptions = {
       root: null,
       rootMargin: '-85px 0px -50% 0px', // Trigger when section occupies the active zone
@@ -94,7 +94,7 @@ function App() {
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-    
+
     sectionIds.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
@@ -113,14 +113,14 @@ function App() {
       {/* Left Navigation Sidebar */}
       <div className="left-branding-sidebar">
         <div className="purple-line"></div>
-        
+
         {/* Terminal/Home Icon at the top */}
-        <button 
+        <button
           onClick={() => scrollToSection('home')}
           className={`sidebar-nav-item ${activeTab === 'home' ? 'active' : ''}`}
-          style={{ 
-            marginTop: '10px', 
-            transform: 'none', 
+          style={{
+            marginTop: '10px',
+            transform: 'none',
             writingMode: 'horizontal-tb',
             display: 'flex',
             alignItems: 'center',
@@ -134,28 +134,28 @@ function App() {
 
         {/* Vertical Navigation Items Centered Vertically */}
         <div className="sidebar-nav-container" style={{ margin: 'auto 0' }}>
-          <button 
+          <button
             onClick={() => scrollToSection('work')}
             className={`sidebar-nav-item ${activeTab === 'work' ? 'active' : ''}`}
           >
             PROJECTS
           </button>
-          
-          <button 
+
+          <button
             onClick={() => scrollToSection('education')}
             className={`sidebar-nav-item ${activeTab === 'education' ? 'active' : ''}`}
           >
             EDUCATION
           </button>
-          
-          <button 
+
+          <button
             onClick={() => scrollToSection('ojt')}
             className={`sidebar-nav-item ${activeTab === 'ojt' ? 'active' : ''}`}
           >
             EXPERIENCE
           </button>
-          
-          <button 
+
+          <button
             onClick={() => scrollToSection('achievements')}
             className={`sidebar-nav-item ${activeTab === 'achievements' ? 'active' : ''}`}
           >
@@ -165,14 +165,14 @@ function App() {
 
         {/* Footer Icons at the bottom of the sidebar */}
         <div className="sidebar-footer-icons" style={{ marginBottom: '10px', display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <span 
+          <span
             title="Terminal Sandbox"
             onClick={() => scrollToSection('sandbox')}
             style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
-            <SquareTerminal 
-              size={18} 
-              className="sidebar-footer-icon" 
+            <SquareTerminal
+              size={18}
+              className="sidebar-footer-icon"
             />
           </span>
           <button
@@ -244,22 +244,57 @@ function App() {
       {/* Main Workspace Frame */}
       <div className="content-wrapper">
         {/* Mobile Header Bar (Sticky) */}
-        <header className="mobile-header mobile-only">
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        <header className="mobile-header">
+          <span 
+            className="mono" 
             style={{ 
-              background: 'none', 
-              border: 'none', 
-              cursor: 'pointer', 
-              color: 'var(--primary)',
-              padding: '5px',
-              display: 'flex',
-              alignItems: 'center',
-              marginLeft: 'auto'
+              fontWeight: 700, 
+              color: 'var(--primary)', 
+              fontSize: '0.9rem',
+              letterSpacing: '0.05em',
+              cursor: 'pointer'
             }}
+            onClick={() => scrollToSection('home')}
           >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+            [JULS]
+          </span>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+            {/* Theme Toggle Button */}
+            <button
+              onClick={() => setIsDarkMode(prev => !prev)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: 'var(--primary)',
+                padding: '5px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'transform 0.2s'
+              }}
+              title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+
+            {/* Hamburger Toggle */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              style={{ 
+                background: 'none', 
+                border: 'none', 
+                cursor: 'pointer', 
+                color: 'var(--primary)',
+                padding: '5px',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </header>
 
         {/* Mobile Menu Drawer Overlay */}
@@ -269,7 +304,7 @@ function App() {
           <button onClick={() => handleMobileNav('ojt')} className="mobile-nav-link">EXPERIENCE</button>
           <button onClick={() => handleMobileNav('achievements')} className="mobile-nav-link">ACHIEVEMENTS</button>
           <button onClick={() => handleMobileNav('sandbox')} className="mobile-nav-link">TERMINAL</button>
-          
+
           <div style={{ marginTop: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0px' }}>
             <WalkingCat />
             <div style={{ width: '240px', height: '1px', backgroundColor: 'var(--border-color)', margin: '0 auto 12px auto' }}></div>
@@ -301,11 +336,11 @@ function App() {
 
         {/* Top Header Information Panel (Desktop Only) */}
         <header className="top-system-nav">
-          <button 
+          <button
             onClick={() => scrollToSection('home')}
-            style={{ 
-              background: 'none', 
-              border: 'none', 
+            style={{
+              background: 'none',
+              border: 'none',
               cursor: 'pointer',
               outline: 'none',
               padding: 0
@@ -321,7 +356,7 @@ function App() {
           <section id="home">
             <Home />
           </section>
-          
+
           <section id="work">
             <Projects />
           </section>
@@ -329,38 +364,38 @@ function App() {
           <section id="stack">
             <Stack />
           </section>
-          
+
           <section id="education">
             <Education />
           </section>
-          
+
           <section id="ojt">
             <OJT />
           </section>
-          
+
           <section id="achievements">
             <Skills />
           </section>
-          
+
           <section id="sandbox">
             <TerminalSandbox />
           </section>
 
           {/* Footer Component */}
-          <footer 
+          <footer
             className="desktop-only"
-            style={{ 
-              borderTop: '1px solid var(--border-color)', 
+            style={{
+              borderTop: '1px solid var(--border-color)',
               padding: '40px 20px',
               backgroundColor: 'var(--bg-main)',
               fontFamily: 'var(--font-mono)'
             }}
           >
             {/* Bottom Footer Details */}
-            <div 
-              style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
                 alignItems: 'flex-start',
                 flexWrap: 'wrap',
                 gap: '30px'
@@ -368,11 +403,11 @@ function App() {
             >
               {/* Left Column: Brand & Info */}
               <div>
-                <h3 
-                  style={{ 
-                    fontFamily: 'var(--font-sans)', 
-                    fontWeight: 900, 
-                    fontSize: '1.6rem', 
+                <h3
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontWeight: 900,
+                    fontSize: '1.6rem',
                     textTransform: 'uppercase',
                     marginBottom: '10px',
                     letterSpacing: '-0.05rem',
@@ -387,12 +422,12 @@ function App() {
               </div>
 
               {/* Right Column: Social Links Grid */}
-              <div 
-                style={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: '1fr 1fr', 
-                  gap: '12px 30px', 
-                  fontSize: '0.75rem' 
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: '12px 30px',
+                  fontSize: '0.75rem'
                 }}
               >
                 <a href="https://github.com/juliusramboy" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>
@@ -401,7 +436,7 @@ function App() {
                 <a href="https://www.linkedin.com/in/julius-ramboy" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>
                   LINKEDIN ↗
                 </a>
-                 <a href="mailto:jlb.ramboy@gmail.com" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>
+                <a href="mailto:jlb.ramboy@gmail.com" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>
                   EMAIL ↗
                 </a>
               </div>

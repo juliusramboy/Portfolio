@@ -1063,7 +1063,7 @@ body {
 
   .mobile-header {
     display: flex !important; /* Show mobile header */
-    justify-content: flex-end !important; /* Align hamburger to the right */
+    justify-content: space-between !important; /* Align logo left and hamburger/theme right */
   }
 
   main {
